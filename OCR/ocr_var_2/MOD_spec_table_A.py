@@ -21,7 +21,7 @@ class ComBld():
 
     def spec_table_A(self):
 
-        target_js = r"D:/results/var_2/forDL/jsons/"
+        target_js = r"D:/results/var_2/"
         
         print("\n", " "*20, "::: 감정평가명세표 A형 제 {}페이지 분석시작 :::".format(self.order), "\n\n")
 
@@ -1265,7 +1265,7 @@ class ComBld():
 
 
 # def spec_table_A(idir, image_file, image_full_path, new_coord_line, new_coord_box, order):
-#     target_js = r"D:/results/var_2/forDL/jsons/"
+#     target_js = r"D:/results/var_2/"
     
 #     print("\n", " "*20, "::: 감정평가명세표 A형 제 {}페이지 분석시작 :::".format(order), "\n\n")
 

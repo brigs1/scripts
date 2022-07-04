@@ -572,37 +572,88 @@ import re
 
 def top_gun_for_addr(idir, image_full_path, new_coord_box, new_coord_line, up_limit, down_limit):
     body_general_attr = {}
-    addrnum = []
+    addr = []
+    
 
     for vg in new_coord_box:
         if up_limit < vg[0][1] < down_limit:
      
             if re.search("^[가-힣]+\d*도$", vg[5]):   
+                addr.append(vg)
+                #body_general_attr["도"] = "{}".format(vg[5])
+
+            elif re.search("^[가-힣]+\d*시$", vg[5]):  
+                addr.append(vg) 
+                #body_general_attr["시"] = "{}".format(vg[5])
+                
+            elif re.search("^[가-힣]+\d*[군구]$", vg[5]):
+                addr.append(vg)
+                #body_general_attr["군구"] = "{}".format(vg[5])                        
+
+            elif re.search("^[가-힣]+\d{1,2}[동]$|^[가-힣]{,4}동$", vg[5]):
+                addr.append(vg)
+                #body_general_attr["동"] = "{}".format(vg[5])
+
+            elif re.search("^[가-힣]+\d*[면]$", vg[5]):
+                addr.append(vg)
+                #body_general_attr["면"] = "{}".format(vg[5])
+
+            elif re.search("^[가-힣]+\d*[리]$", vg[5]):
+                addr.append(vg)
+                #body_general_attr["리"] = "{}".format(vg[5])  
+
+            elif re.search("\d{,4}\-\d{,2}|^\d{,4}$", vg[5]):   #[가-힣]{3,20}|\d+[동]$
+                addr.append(vg)
+                #body_general_attr["지번"] = "{}".format(vg[5])
+
+    ## 주소가 가로로 1열만 있는 경우##
+    new_addr = []    
+    if len(addr) > 1:
+        print(addr)
+        for th, ne in this_and_next(addr):
+            if th !=None and ne!=None:
+            
+                if abs(th[0][1] - ne[0][1]) < 5:
+                    new_addr.append(th)
+                    new_addr.append(ne)
+
+    
+
+    if len(new_addr) > 1:
+        for vg in new_addr:
+
+            print("새 vg", vg)
+            if re.search("^[가-힣]+\d*도$", vg[5]):   
+                addr.append(vg)
                 body_general_attr["도"] = "{}".format(vg[5])
 
-            elif re.search("^[가-힣]+\d*시$", vg[5]):   
+            elif re.search("^[가-힣]+\d*시$", vg[5]):  
+                addr.append(vg) 
                 body_general_attr["시"] = "{}".format(vg[5])
                 
             elif re.search("^[가-힣]+\d*[군구]$", vg[5]):
+                addr.append(vg)
                 body_general_attr["군구"] = "{}".format(vg[5])                        
 
-            elif re.search("^[가-힣]+\d*[동]$", vg[5]):
+            elif re.search("^[가-힣]+\d{1,2}[동]$|^[가-힣]{,4}동$", vg[5]):
+                addr.append(vg)
                 body_general_attr["동"] = "{}".format(vg[5])
 
             elif re.search("^[가-힣]+\d*[면]$", vg[5]):
+                addr.append(vg)
                 body_general_attr["면"] = "{}".format(vg[5])
 
             elif re.search("^[가-힣]+\d*[리]$", vg[5]):
+                addr.append(vg)
                 body_general_attr["리"] = "{}".format(vg[5])  
-            elif re.search("(^\d+\-\d*)", vg[5]):   #[가-힣]{3,20}|\d+[동]$
-                addrnum.append(vg)
-                body_general_attr["지번"] = "{}".format(vg[5])
-                
 
+            elif re.search("\d{,4}\-\d{,2}|^\d{,4}$", vg[5]):   #[가-힣]{3,20}|\d+[동]$
+                addr.append(vg)
+                body_general_attr["지번"] = "{}".format(vg[5])
 
 
     if len(body_general_attr) > 1:
-        print("축적된 지번", addrnum)
+        
         return body_general_attr
 
 
@@ -998,7 +1049,7 @@ def treat_body(idir, image_full_path, new_coord_line, new_coord_box):
     #                elif re.search("\w{1,5}[군구]$", can_val[5]):
     #                    base_dict["군구"] = can_val[5]
 
-    #                elif re.search("\w{1,8}동$", can_val[5]):
+    #                elif re.search("^[가-힣]+\d{1,2}[동]$|^[가-힣]{,4}동$", can_val[5]):
     #                    base_dict["동"] = can_val[5]
 
     #                elif re.search("\w{1,8}[길로]$", can_val[5]):

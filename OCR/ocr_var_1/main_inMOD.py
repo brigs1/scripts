@@ -43,8 +43,8 @@ if __name__=='__main__':
 
     image_dir = r"D:/data/Head_Tail_folder_wrapped/"
     
-    target_img = r"D:/results/forDL/images/"
-    target_js = r"D:/results/forDL/jsons/"
+    target_img = r"D:/results/var_2/forDL/images/"
+    target_js = r"D:/results/var_2/forDL/jsons/"
 
 
     new_head_data = [] # head_table에서 리턴되는 딕셔너리 수집

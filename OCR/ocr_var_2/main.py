@@ -40,8 +40,8 @@ if __name__=='__main__':
 
     image_dir = r"D:/data/complex_specs/"
 
-    target_img = r"D:/results/var_2/forDL/imgs/"
-    target_js = r"D:/results/var_2/forDL/jsons/"
+    target_img = r"D:/results/var_2/"
+    target_js = r"D:/results/var_2/"
 
     new_head_data = [] # head_table에서 리턴되는 딕셔너리 수집
 

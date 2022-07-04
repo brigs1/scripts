@@ -197,12 +197,15 @@ if __name__=='__main__':
     print("\t", df_land)
     df_land.to_excel(r"D:/results/var_2/spec_land.xlsx")
 
-    if body_List != None:
-        print(body_List)
+    eu_body_List = []
+    for bl in body_List:
+        if bl != None:
+            print(bl)
+            eu_body_List.append(bl)
 
-        df_body_gen = pd.DataFrame(body_List, columns = ["평가서 ID", "소재지",  "도로명주소", "건물명", "용도", "사용승인일", "전유면적", "공용면적", "대지권면적", "계약면적"])
-        print("\t", " 이것이 본문에서 수집된 귀한 정보임!!!", df_body_gen)
-        df_body_gen.to_excel(r"D:/results/var_2/body_general.xlsx")
+    df_body_gen = pd.DataFrame(eu_body_List, columns = ["시", "군구", "동", "지번"]) #["평가서 ID", "소재지",  "도로명주소", "건물명", "용도", "사용승인일", "전유면적", "공용면적", "대지권면적", "계약면적"])
+    print("\t", " 이것이 본문에서 수집된 귀한 정보임!!!", df_body_gen)
+    df_body_gen.to_excel(r"D:/results/var_2/body_general.xlsx")
 
 
     end = time.time()

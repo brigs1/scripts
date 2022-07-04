@@ -714,7 +714,7 @@ def spec_table_B(idir, image_full_path, new_coord_line, new_coord_box, order):
                 #    r_name = re.search("\d+(?=[\)\]])", adr[5]).group(0)
                 #    road_addr.append(r_name)
 
-                #elif re.search("^\d{1,4}\-?\d{1,3}$", adr[5]):
+                #elif re.search("\d{,4}\-\d{,2}|^\d{,4}$", adr[5]):
                 #    general_attr["지번"] = "{}".format(adr[5])
                 #    #road_addr.append(adr[5])
                 #    #print("지번", general_attr)
@@ -839,7 +839,7 @@ def spec_table_B(idir, image_full_path, new_coord_line, new_coord_box, order):
                                     #print(land_attr)
 
                             if  generalinfo_L < midpoint(va)[0] < landclass_L:
-                                if re.search("^\d{1,4}\-?\d{1,3}$", va[5]):
+                                if re.search("\d{,4}\-\d{,2}|^\d{,4}$", va[5]):
                                     land_attr["지번"] = "{}".format(va[5])
                                     general_attr["지번"] = "{}".format(va[5])
                                     #print(land_attr)   
@@ -856,7 +856,7 @@ def spec_table_B(idir, image_full_path, new_coord_line, new_coord_box, order):
                                     #print(land_attr)
 
                             if  generalinfo_L < midpoint(va)[0] < builduse_L:
-                                if re.search("^\d{1,4}\-?\d{1,3}$", va[5]):
+                                if re.search("\d{,4}\-\d{,2}|^\d{,4}$", va[5]):
                                     land_attr["지번"] = "{}".format(va[5])
                                     general_attr["지번"] = "{}".format(va[5])
                                     #print(land_attr)  

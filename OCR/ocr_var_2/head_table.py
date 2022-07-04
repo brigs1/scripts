@@ -3,7 +3,7 @@ import re, os
 
 
 def head_table(idir, image_file, image_full_path, new_coord_line, new_coord_box): 
-    target_js = r"D:/results/var_2/forDL/jsons/"
+    target_js = r"D:/results/var_2/"
     #print("\n", " "*30, "::: 감정평가표 분석시작 :::", "\n\n")
  
     head_errors = []

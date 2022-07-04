@@ -725,7 +725,7 @@ def spec_table_A(idir, image_file, image_full_path, new_coord_line, new_coord_bo
                     elif re.search("^[가-힣]+\d*[군구]$", vg[5]):
                        general_attr["군구"] = "{}".format(vg[5])                        
 
-                    elif re.search("^[가-힣]+\d*[동]$", vg[5]):
+                    elif re.search("^[가-힣]+\d{1,2}[동]$|^[가-힣]{,4}동$", vg[5]):
                        general_attr["동"] = "{}".format(vg[5])
 
                     elif re.search("^[가-힣]+\d*[면]$", vg[5]):
@@ -748,7 +748,7 @@ def spec_table_A(idir, image_file, image_full_path, new_coord_line, new_coord_bo
                 elif addrnum_L < midpoint(vg)[0] < addrnum_R:
 
                     if memo_Y + 50 < midpoint(vg)[1] < no2_landclass_level[0]:  ## 지번 속 건물명 넣기
-                        if re.search("(^\d+\-?\d*)", vg[5]):   #[가-힣]{3,20}|\d+[동]$
+                        if re.search("\d{,4}\-\d{,2}|^\d{,4}$*)", vg[5]):   #[가-힣]{3,20}|\d+[동]$
                             addrnum.append(vg)
                             #general_attr["지번"] = "{}".format(vg[5])
 
@@ -756,7 +756,7 @@ def spec_table_A(idir, image_file, image_full_path, new_coord_line, new_coord_bo
                             b_name_1.append(vg)
                     else:
                         if memo_Y + 50 < midpoint(vg)[1] < 1000:  ## 지번 속 건물명 넣기
-                            if re.search("(\d+\-?\d*)", vg[5]):   #[가-힣]{3,20}|\d+[동]$
+                            if re.search("\d{,4}\-\d{,2}|^\d{,4}$", vg[5]):   #[가-힣]{3,20}|\d+[동]$
                                 addrnum.append(vg)
                                 #general_attr["지번"] = "{}".format(vg[5])
 
@@ -919,7 +919,7 @@ def spec_table_A(idir, image_file, image_full_path, new_coord_line, new_coord_bo
                                 #print(land_attr)
 
                         elif  addrnum_L < midpoint(va)[0] < addrnum_R:
-                            if re.search("\d+\-?\d+", va[5]):
+                            if re.search("\d{,4}\-\d{,2}|^\d{,4}$", va[5]):
                                 if "지번" not in land_attr:
                                     land_attr["지번"] = "{}".format(va[5])
                                     for_json_sta["지번"] = "{}".format(va[5]) 

@@ -36,7 +36,7 @@ def head_table(idir, image_file, image_full_path, new_coord_line, new_coord_box)
 
 
 
-    head_attr["평가서 ID"] = idir
+    head_attr["페이지 ID"] = image_full_path.split('/')[-1].split('.')[0]
     head_data.append(head_attr)
 
     

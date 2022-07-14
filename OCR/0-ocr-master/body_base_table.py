@@ -1,4 +1,4 @@
-﻿from treat_body import *
+﻿from ttreat_body_advancedimport *
 
 def treat_base_table(idir, image_full_path, new_coord_box, new_coord_line, up_limit, down_limit):
 

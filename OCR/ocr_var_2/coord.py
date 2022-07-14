@@ -30,7 +30,7 @@ def coord(image_full_path):
         new_coord_line.append(each_line)
         new_coord_line.sort(key=lambda t: t[0][1])
 
-    #print("라인_소수점 정말로 정리::::", new_coord_line, "\n") 
+    print("라인_소수점 정말로 정리::::", new_coord_line, "\n") 
 
     ###### OCR 모드 1 >> midpoint 좌표계로 변환 #####
     mid_coord_line = []

@@ -804,7 +804,7 @@ def spec_table_B(idir, image_full_path, new_coord_line, new_coord_box, order):
             floor_num.sort(key=int) # 층수는 string이므로 이와 같이 "정수기준이라면"으로 정렬후 가장 큰 마지막 숫자 선택
             general_attr["지상 층 수"] = int(floor_num[-1])
 
-        general_attr["평가서 ID"] = idir
+        general_attr["페이지 ID"] = image_full_path.split('/')[-1].split('.')[0]
         spec_general_data.append(general_attr)
             
 
@@ -870,7 +870,7 @@ def spec_table_B(idir, image_full_path, new_coord_line, new_coord_box, order):
                         break
 
                 if breaker:
-                    land_attr["평가서 ID"] = idir
+                    land_attr["페이지 ID"] = image_full_path.split('/')[-1].split('.')[0]
                     land_attr["용도지역"] = "B형은 미기재"
                     land_attr_copy = land_attr.copy() # 딕셔너리는 키밸류 integrity를 위해 append 시 카피본을 넣음                    
                     L_list.append(land_attr_copy)
@@ -934,7 +934,7 @@ def spec_table_B(idir, image_full_path, new_coord_line, new_coord_box, order):
                         break
 
                 if p_breaker:
-                    building_attr["평가서 ID"] = idir #image_file # # #
+                    building_attr["페이지 ID"] = image_full_path.split('/')[-1].split('.')[0]
                     building_attr["대지권면적_사정"] = "대지권 항목 없음"
                     building_attr_copy = building_attr.copy()
                     B_list.append(building_attr_copy) 
@@ -1003,7 +1003,7 @@ def spec_table_B(idir, image_full_path, new_coord_line, new_coord_box, order):
                                 break
 
                 if p_breaker:
-                    building_attr["평가서 ID"] = idir #image_file # # #
+                    building_attr["페이지 ID"] = image_full_path.split('/')[-1].split('.')[0]
                     building_attr_copy = building_attr.copy()
                     B_list.append(building_attr_copy) 
                     

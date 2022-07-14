@@ -571,7 +571,7 @@ def spec_table_A(idir, image_file, image_full_path, new_coord_line, new_coord_bo
 
         merged_comp = []
         for sub_comp in completed_groups:
-            sub_comp.sort(key=lambda t: t[0][0])
+            sub_comp.sort(key=lambda t: t[0][0])1
 
                     
             if len(sub_comp) == 2:                                               
@@ -882,7 +882,7 @@ def spec_table_A(idir, image_file, image_full_path, new_coord_line, new_coord_bo
             for_json_sta["지번"] = ' '.join(new_addrnum)
             
         # 수집된 각 항목의 리스트를 for 문 종료시 딕셔너리에 부가한다.
-        general_attr["평가서 ID"] = idir
+        general_attr["페이지 ID"] = image_full_path.split('/')[-1].split('.')[0]
 
         #general_attr["도로명"] = ' '.join(road_addr)
         #for_json_sta["도로명"] = ' '.join(road_addr)
@@ -964,7 +964,7 @@ def spec_table_A(idir, image_file, image_full_path, new_coord_line, new_coord_bo
                         break
 
                 if breaker:
-                    land_attr["평가서 ID"] = idir
+                    land_attr["페이지 ID"] = image_full_path.split('/')[-1].split('.')[0]
                     land_attr_copy = land_attr.copy() # 딕셔너리는 키밸류 integrity를 위해 append 시 카피본을 넣음                    
                     L_list.append(land_attr_copy)
                     
@@ -1035,7 +1035,7 @@ def spec_table_A(idir, image_file, image_full_path, new_coord_line, new_coord_bo
                         break
 
                 if p_breaker:
-                    building_attr["평가서 ID"] = idir #image_file # # #
+                    building_attr["페이지 ID"] = image_full_path.split('/')[-1].split('.')[0]
                     building_attr["대지권면적_사정"] = "대지권 면적 없음"
                     building_attr_copy = building_attr.copy()
                     B_list.append(building_attr_copy) 
@@ -1105,7 +1105,7 @@ def spec_table_A(idir, image_file, image_full_path, new_coord_line, new_coord_bo
                         break
 
                 if p_breaker:
-                    building_attr["평가서 ID"] = idir #image_file # # #
+                    building_attr["페이지 ID"] = image_full_path.split('/')[-1].split('.')[0]
                    
                     building_attr_copy = building_attr.copy()
                     B_list.append(building_attr_copy) 
@@ -1196,7 +1196,7 @@ def spec_table_A(idir, image_file, image_full_path, new_coord_line, new_coord_bo
                                 break
 
                 if d_breaker:
-                    building_attr["평가서 ID"] = idir #image_file # # #
+                    building_attr["페이지 ID"] = image_full_path.split('/')[-1].split('.')[0]
                     building_attr_copy = building_attr.copy()
                     B_list.append(building_attr_copy) 
                     

@@ -18,6 +18,7 @@ def coord(image_full_path):
     """
     ############ 이미지 >> box mode, line mode 좌표계 생성 ####################
     """
+    #print(ret_line)
     global raw_coord_line, mid_coord_line, new_coord_box, mid_coord_box, new_coord_line
     raw_coord_line = ret_line['result']['line_boxes'] 
 

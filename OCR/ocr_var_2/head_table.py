@@ -31,8 +31,8 @@ def head_table(idir, image_file, image_full_path, new_coord_line, new_coord_box)
                     head_attr["기준시점"] = base_val[5]
                     print("기준시점 : {}".format(base_val[5]))
     
-    with open(target_js + os.path.splitext(image_file)[0]+".json", 'w', encoding="UTF-8") as ht: #"
-        ht.write(str(head_attr))
+    # with open(target_js + os.path.splitext(image_file)[0]+".json", 'w', encoding="UTF-8") as ht: #"
+    #     ht.write(str(head_attr))
 
 
 

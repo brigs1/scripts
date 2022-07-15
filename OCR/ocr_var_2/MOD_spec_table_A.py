@@ -1,16 +1,9 @@
 ﻿from coord import *
 import re, os
 
-# class SpecTableA():
-#     def __init__(self, )
-
-
-
-
 
 class ComBld():
     def __init__(self, idir, image_file, image_full_path, new_coord_line, new_coord_box, order):
-
         
         self.idir=idir
         self.image_file=image_file
@@ -21,7 +14,7 @@ class ComBld():
 
     def spec_table_A(self):
 
-        target_js = r"D:/results/var_2/"
+        target_js = r"/media/y/850EVO/results/var/"
         
         print("\n", " "*20, "::: 감정평가명세표 A형 제 {}페이지 분석시작 :::".format(self.order), "\n\n")
 
@@ -661,7 +654,7 @@ class ComBld():
             no2_landclass_level = []
             if len(landclass_level) == 0:
                 err_note = "파일명: {}__ 지목 레벨이 없습니다::".format(self.image_full_path)
-                with open(r"D:/results/var_2/spec_errors_landclass_level.txt", 'a') as f:
+                with open(r"/media/y/850EVO/results/spec_errors_landclass_level.txt", 'a') as f:
                     f.write("\n")
                     f.write(err_note)
             else:
@@ -675,7 +668,7 @@ class ComBld():
             no2_price_level = []
             if len(price_level) == 0:
                 err_note = "파일명: {}__ 평가액 레벨이 없습니다::".format(self.image_full_path)
-                with open(r"D:/results/var_2/spec_errors_price_level.txt", 'a') as f:
+                with open(r"/media/y/850EVO/results/spec_errors_price_level.txt", 'a') as f:
                     f.write("\n")
                     f.write(err_note)
             else:
@@ -690,9 +683,9 @@ class ComBld():
             no2_daejikwon_level = []
             if len(daejikwon_level) == 0:
                 err_note = "파일명: {}__ 대지권 레벨이 없습니다::".format(self.image_full_path)
-                with open(r"D:/results/var_2/spec_errors_daejikwon_level.txt", 'a') as f:
-                    f.write("\n")
-                    f.write(err_note)  
+                # with open(r"/media/y/850EVO/results/spec_errors_daejikwon_level.txt", 'a') as f:
+                #     f.write("\n")
+                #     f.write(err_note)  
             else:
                 for j2 in daejikwon_level:
                     if j2 not in no2_daejikwon_level:
@@ -704,9 +697,9 @@ class ComBld():
             no2_soyoukwon_level = []
             if len(soyoukwon_level) == 0:
                 err_note = "파일명: {}__ 소유권 레벨이 없습니다::".format(self.image_full_path)
-                with open(r"D:/results/var_2/spec_errors_soyoukwon_level.txt", 'a') as f:
-                    f.write("\n")
-                    f.write(err_note)
+                # with open(r"/media/y/850EVO/results/spec_errors_soyoukwon_level.txt", 'a') as f:
+                #     f.write("\n")
+                #     f.write(err_note)
             else:
                 for s2 in soyoukwon_level:
                     if s2 not in no2_soyoukwon_level:
@@ -751,7 +744,7 @@ class ComBld():
                         elif re.search("^[가-힣]+\d*[군구]$", vg[5]):
                             self.building_attr["군구"] = "{}".format(vg[5])                        
 
-                        elif re.search("^[가-힣]+\d*[동]$", vg[5]):
+                        elif re.search("^[가-힣]+\d{1,2}[동]$|^[가-힣]{,4}동$", vg[5]):
                             self.building_attr["동"] = "{}".format(vg[5])
 
                         elif re.search("^[가-힣]+\d*[면]$", vg[5]):
@@ -760,11 +753,11 @@ class ComBld():
                         elif re.search("^[가-힣]+\d*[리]$", vg[5]):
                             self.building_attr["리"] = "{}".format(vg[5])
                             
-                        elif re.search("^[가-힣]+\d*[길로]$", vg[5]):
-                            road_addr.append(vg[5])
+                        # elif re.search("^[가-힣]+\d*[길로]$", vg[5]):
+                        #     road_addr.append(vg[5])
 
-                        elif re.search("^\d{1,4}\-?\d{1,3}[길로]?$", vg[5]):
-                            road_addr.append(vg[5])  # 도로명 주소상 지번이므로 구분함
+                        # elif re.search("^\d{1,4}\-?\d{1,3}[길로]?$", vg[5]):
+                        #     road_addr.append(vg[5])  # 도로명 주소상 지번이므로 구분함
     
                         
                     ## 건물명은 소재지에도 있고, 지번에도 있다.
@@ -773,59 +766,57 @@ class ComBld():
 
                     elif addrnum_L < midpoint(vg)[0] < addrnum_R:
 
-                        if memo_Y + 50 < midpoint(vg)[1] < no2_landclass_level[0]:  ## 지번 속 건물명 넣기
-                            if re.search("(^\d+\-?\d*)", vg[5]):   #[가-힣]{3,20}|\d+[동]$
+                        if memo_Y + 50 < midpoint(vg)[1] < no2_landclass_level[0]:  
+                            if re.search("\d{,4}\-\d{,2}|^\d{,4}$", vg[5]):   #[가-힣]{3,20}|\d+[동]$
                                 addrnum.append(vg)
                                 #building_attr["지번"] = "{}".format(vg[5])
 
                             if re.search("[가-힣]+", vg[5]):
                                 b_name_1.append(vg)
-                        else:
-                            if memo_Y + 50 < midpoint(vg)[1] < 1000:  ## 지번 속 건물명 넣기
-                                if re.search("(\d+\-?\d*)", vg[5]):   #[가-힣]{3,20}|\d+[동]$
+                        elif no2_landclass_level[0] < midpoint(vg)[1] < 1000: ### B 형에서도 수정해야할 듯 한데 아직 못찾음
+
+                                if re.search("\d{,4}\-\d{,2}|^\d{,4}$", vg[5]):   #[가-힣]{3,20}|\d+[동]$
                                     addrnum.append(vg)
                                     #building_attr["지번"] = "{}".format(vg[5])
 
-                                if re.search("[가-힣]+", vg[5]):
+                                if re.search("[가-힣]+", vg[5]):  ## 지번 속 건물명 넣기
                                     b_name_1.append(vg)
 
-                    elif landclass_L < midpoint(vg)[0] < landclass_R:
+                    # elif landclass_L < midpoint(vg)[0] < landclass_R:
                         
-                        if paper_Y  < midpoint(vg)[1] < no2_landclass_level[0]:  
-                            if re.search("도시형|^다세대|주택|공동|근린|업무", vg[5]):   
-                                use_mode.append(vg[5])
-                            else:
-                                if re.search(".+", vg[5]):   #[가-힣]{3,20}|\d+[동]$
-                                    b_name_2.append(vg)
-                                        
+                    #     if paper_Y  < midpoint(vg)[1] < no2_landclass_level[0]:  
+                    #         if re.search("도시형|^다세대|주택|공동|근린|업무", vg[5]):   
+                    #             use_mode.append(vg[5])
+                    #         else:
+                    #             if re.search(".+", vg[5]):   #[가-힣]{3,20}|\d+[동]$
+                    #                 b_name_2.append(vg)
 
-                        else:
-                            if memo_Y + 50 < midpoint(vg)[1] < 1000:  ## 지번 속 건물명 넣기
-                                if re.search("도시형|^다세대|주택|공동|근린|업무", vg[5]):   
-                                    use_mode.append(vg[5])
-                                else:
-                                    if re.search(".+", vg[5]):   #[가-힣]{3,20}|\d+[동]$
-                                        b_name_2.append(vg)
-                                        
+                    #     else:
+                    #         if memo_Y + 50 < midpoint(vg)[1] < 1000:  ## 지번 속 건물명 넣기
+                    #             if re.search("도시형|^다세대|주택|공동|근린|업무", vg[5]):   
+                    #                 use_mode.append(vg[5])
+                    #             else:
+                    #                 if re.search(".+", vg[5]):   #[가-힣]{3,20}|\d+[동]$
+                    #                     b_name_2.append(vg)
 
-                    elif landclass_R < midpoint(vg)[0] < paper_L:
-                        if re.search("\w+조$|철근\w+조$|콘크\w+조$|크리\w+조$|세멘\w+조$|시멘\w+조$|시맨\w+조$", vg[5]):   
-                            self.building_attr["구조"] = "{}".format(vg[5])
-                            self.for_json_sta["구조"] = "{}".format(vg[5])
+                    # elif landclass_R < midpoint(vg)[0] < paper_L:
+                    #     if re.search("\w+조$|철근\w+조$|콘크\w+조$|크리\w+조$|세멘\w+조$|시멘\w+조$|시맨\w+조$", vg[5]):   
+                    #         self.building_attr["구조"] = "{}".format(vg[5])
+                    #         self.for_json_sta["구조"] = "{}".format(vg[5])
 
-                        elif re.search("\w+붕|슬라브\w+붕$|경사\w+붕$", vg[5]):   
-                            self.building_attr["지붕"] = "{}".format(vg[5])
-                            self.for_json_sta["지붕"] = "{}".format(vg[5])
-                        elif re.search("\d{1,3}층", vg[5]): 
-                            floor_n = re.search("\d{1,3}(?=층)", vg[5]).group(0)
-                            floor_num.append(floor_n)
+                    #     elif re.search("\w+붕|슬라브\w+붕$|경사\w+붕$", vg[5]):   
+                    #         self.building_attr["지붕"] = "{}".format(vg[5])
+                    #         self.for_json_sta["지붕"] = "{}".format(vg[5])
+                    #     elif re.search("\d{1,3}층", vg[5]): 
+                    #         floor_n = re.search("\d{1,3}(?=층)", vg[5]).group(0)
+                    #         floor_num.append(floor_n)
                             
                             ### 참고 table_title = re.search("(?<=[\.\)\,-]).{2,25}", up[2]).group(0)
                 
             ### 건물명은 조금 복잡해서 따로 처리해준다 ##
             if len(b_name_1) > 0:
                 new_b_name_1 = []
-                b_name_1.sort(key=lambda t: t[0][1])
+                b_name_1.sort(key=lambda t: t[0][1])  # y좌표 크기대로 정렬
                 for bnm1 in b_name_1:
                     if bnm1[5] not in new_b_name_1:
                         new_b_name_1.append(bnm1[5])
@@ -840,7 +831,7 @@ class ComBld():
 
 
 
-                groups = []
+                groups = [] # 비슷한 것끼리 그룹핑해서 넣어줌
                 brk = False
                 for bnm2 in b_name_2:   
                     for group in groups:        
@@ -920,68 +911,68 @@ class ComBld():
                     
             ############ 지목레벨에서 뽑을 것 = 지목 / 지번 / 공부_면적 ###########################################
 
-            if len(no2_landclass_level) > 0: # 토지속성도 지목레벨이 존재할때만 뽑음
+            # if len(no2_landclass_level) > 0: # 토지속성도 지목레벨이 존재할때만 뽑음
 
-                breaker = False       
-                for ue in no2_landclass_level: # 지목에 대해 여러개인 경우까지 순회하며 각각의 데이터를 모음
-                    for ind, va in  enumerate(num_checked_coord_box):
-                        #print(va, "이것과 비교", ue)
+            #     breaker = False       
+            #     for ue in no2_landclass_level: # 지목에 대해 여러개인 경우까지 순회하며 각각의 데이터를 모음
+            #         for ind, va in  enumerate(num_checked_coord_box):
+            #             #print(va, "이것과 비교", ue)
 
-                        if abs(midpoint(va)[1] - ue) < 50:
-                            #print("지목 레벨과 유사한 값::", va, ue)
+            #             if abs(midpoint(va)[1] - ue) < 50:
+            #                 #print("지목 레벨과 유사한 값::", va, ue)
 
-                            if  num_L < midpoint(va)[0] < num_R:
-                                if re.search("\w{1,3}", va[5]):
-                                    self.land_attr["일련번호_토지"] = "{}".format(va[5]) 
-                                    self.for_json_sta["일련번호_토지"] = "{}".format(va[5]) 
-                                    #print(land_attr)
-                                #else:
-                                    #land_attr["일련번호_토지"] = "Not Found" 
+            #                 if  num_L < midpoint(va)[0] < num_R:
+            #                     if re.search("\w{1,3}", va[5]):
+            #                         self.land_attr["일련번호_토지"] = "{}".format(va[5]) 
+            #                         self.for_json_sta["일련번호_토지"] = "{}".format(va[5]) 
+            #                         #print(land_attr)
+            #                     #else:
+            #                         #land_attr["일련번호_토지"] = "Not Found" 
 
-                            elif  landclass_L < midpoint(va)[0] < landclass_R:
-                                if re.search("^전$|답$|대$|\w+[지원야전장로방천거장]$", va[5]):
-                                    self.land_attr["지목"] = "{}".format(va[5])      
-                                    self.for_json_sta["지목"] = "{}".format(va[5]) 
-                                    #print(land_attr)
+            #                 elif  landclass_L < midpoint(va)[0] < landclass_R:
+            #                     if re.search("^전$|답$|대$|\w+[지원야전장로방천거장]$", va[5]):
+            #                         self.land_attr["지목"] = "{}".format(va[5])      
+            #                         self.for_json_sta["지목"] = "{}".format(va[5]) 
+            #                         #print(land_attr)
 
-                            elif  addrnum_L < midpoint(va)[0] < addrnum_R:
-                                if re.search("\d+\-?\d+", va[5]):
-                                    if "지번" not in self.land_attr:
-                                        self.land_attr["지번"] = "{}".format(va[5])
-                                        self.for_json_sta["지번"] = "{}".format(va[5]) 
-                                    elif "지번" not in self.building_attr:
-                                        self.building_attr["지번"] = "{}".format(va[5])
-                                        self.for_json_sta["지번"] = "{}".format(va[5]) 
-                                    #print(integral_attr)
-                                    #print(integral_attr, "general에 지번 들어감")
+            #                 elif  addrnum_L < midpoint(va)[0] < addrnum_R:
+            #                     if re.search("\d+\-?\d+", va[5]):
+            #                         if "지번" not in self.land_attr:
+            #                             self.land_attr["지번"] = "{}".format(va[5])
+            #                             self.for_json_sta["지번"] = "{}".format(va[5]) 
+            #                         elif "지번" not in self.building_attr:
+            #                             self.building_attr["지번"] = "{}".format(va[5])
+            #                             self.for_json_sta["지번"] = "{}".format(va[5]) 
+            #                         #print(integral_attr)
+            #                         #print(integral_attr, "general에 지번 들어감")
 
-                            elif  landclass_R < midpoint(va)[0] < paper_L: ### "구조
-                                if re.search("제?[123]종|일주|상업|공업|자연", va[5]):
-                                    self.land_attr["용도지역"] = "{}".format(va[5])
-                                    self.for_json_sta["용도지역"] = "{}".format(va[5]) 
-                                    #print(land_attr)
+            #                 elif  landclass_R < midpoint(va)[0] < paper_L: ### "구조
+            #                     if re.search("제?[123]종|일주|상업|공업|자연", va[5]):
+            #                         self.land_attr["용도지역"] = "{}".format(va[5])
+            #                         self.for_json_sta["용도지역"] = "{}".format(va[5]) 
+            #                         #print(land_attr)
 
-                            elif  buildstr_R < midpoint(va)[0] < estim_L:
-                                if re.search("\d+$", va[5]):
-                                    self.land_attr["토지면적_해당필지"] = "{}".format(va[5])
-                                    self.for_json_sta["토지면적_해당필지"] = "{}".format(va[5]) 
-                                    #print(land_attr)
-                                else:
-                                    self.land_attr["토지면적_해당필지"] = "Not Found" 
-                                    self.for_json_sta["토지면적_해당필지"] = "{}".format(va[5]) 
+            #                 elif  buildstr_R < midpoint(va)[0] < estim_L:
+            #                     if re.search("\d+$", va[5]):
+            #                         self.land_attr["토지면적_해당필지"] = "{}".format(va[5])
+            #                         self.for_json_sta["토지면적_해당필지"] = "{}".format(va[5]) 
+            #                         #print(land_attr)
+            #                     else:
+            #                         self.land_attr["토지면적_해당필지"] = "Not Found" 
+            #                         self.for_json_sta["토지면적_해당필지"] = "{}".format(va[5]) 
                                     
-                        elif ind == len(num_checked_coord_box)-1:   ## 밸류항목을 한번탐색                     
-                            breaker = True
-                            break
+            #             elif ind == len(num_checked_coord_box)-1:   ## 밸류항목을 한번탐색                     
+            #                 breaker = True
+            #                 break
 
-                    if breaker:
-                        self.land_attr["페이지 ID"] = self.image_full_path.split('/')[-1].split('.')[0]
-                        land_attr_copy = self.land_attr.copy() # 딕셔너리는 키밸류 integrity를 위해 append 시 카피본을 넣음                    
-                        self.L_list.append(land_attr_copy)
+            #         if breaker:
+            #             self.land_attr["페이지 ID"] = self.image_full_path.split('/')[-1].split('.')[0]
+            #             land_attr_copy = self.land_attr.copy() # 딕셔너리는 키밸류 integrity를 위해 append 시 카피본을 넣음                    
+            #             self.L_list.append(land_attr_copy)
                         
-                        self.land_attr.clear()
+            #             self.land_attr.clear()
 
-            #print("L_list::", self.L_list, "\n")
+            # #print("L_list::", self.L_list, "\n")
 
             #########################################################################################################
 
@@ -1005,23 +996,23 @@ class ComBld():
                                     self.for_json_sta["감정평가액"] = "{}".format(vn[5])                                 
                                     #print("감정평가액::", vn[5])
                 
-                            if num_L < midpoint(vn)[0] < num_R:
-                                if re.search("\w{1,3}", vn[5]):
-                                    self.building_attr["일련번호_건물"] = "{}".format(vn[5])   
-                                    self.for_json_sta["일련번호_건물"] = "{}".format(vn[5])  
-                                    #print("일련번호_건물::", vn[5])
+                            # if num_L < midpoint(vn)[0] < num_R:
+                            #     if re.search("\w{1,3}", vn[5]):
+                            #         self.building_attr["일련번호_건물"] = "{}".format(vn[5])   
+                            #         self.for_json_sta["일련번호_건물"] = "{}".format(vn[5])  
+                            #         #print("일련번호_건물::", vn[5])
 
 
-                            if paper_L < midpoint(vn)[0] < estim_L:       
-                                if re.search("^(\d{1,3}\,)*\d{1,3}.?\d+[-]?$", vn[5]):
-                                    self.building_attr["공부_전유면적"] =  "{}".format(vn[5]) 
-                                    self.for_json_sta["공부_전유면적"] = "{}".format(vn[5])  
-                                    #print("공부_전유면적::", vn[5])
+                            # if paper_L < midpoint(vn)[0] < estim_L:       
+                            #     if re.search("^(\d{1,3}\,)*\d{1,3}.?\d+[-]?$", vn[5]):
+                            #         self.building_attr["공부_전유면적"] =  "{}".format(vn[5]) 
+                            #         self.for_json_sta["공부_전유면적"] = "{}".format(vn[5])  
+                            #         #print("공부_전유면적::", vn[5])
 
-                            if estim_L < midpoint(vn)[0] < price_L:       
-                                if re.search("^(\d{1,3}\,)*\d{1,3}.?\d+[-]?$", vn[5]):
-                                    self.building_attr["사정_전유면적"] =  "{}".format(vn[5])  
-                                    self.for_json_sta["사정_전유면적"] = "{}".format(vn[5])  
+                            # if estim_L < midpoint(vn)[0] < price_L:       
+                            #     if re.search("^(\d{1,3}\,)*\d{1,3}.?\d+[-]?$", vn[5]):
+                            #         self.building_attr["사정_전유면적"] =  "{}".format(vn[5])  
+                            #         self.for_json_sta["사정_전유면적"] = "{}".format(vn[5])  
 
                             if landclass_R < midpoint(vn)[0] < buildstr_R:       
                                 if re.search("호$", vn[5]):
@@ -1068,30 +1059,30 @@ class ComBld():
                                     self.for_json_sta["감정평가액"] = "{}".format(vn[5])                                 
                                     #print("감정평가액::", vn[5])
                 
-                            if num_L < midpoint(vn)[0] < num_R:
-                                if re.search("\w{1,3}", vn[5]):
-                                    self.building_attr["일련번호_건물"] = "{}".format(vn[5])   
-                                    self.for_json_sta["일련번호_건물"] = "{}".format(vn[5])  
-                                    #print("일련번호_건물::", vn[5])
+                            # if num_L < midpoint(vn)[0] < num_R:
+                            #     if re.search("\w{1,3}", vn[5]):
+                            #         self.building_attr["일련번호_건물"] = "{}".format(vn[5])   
+                            #         self.for_json_sta["일련번호_건물"] = "{}".format(vn[5])  
+                            #         #print("일련번호_건물::", vn[5])
 
 
-                            if paper_L < midpoint(vn)[0] < estim_L:       
-                                if re.search("^(\d{1,3}\,)*\d{1,3}.?\d+[-]?$", vn[5]):
-                                    self.building_attr["공부_전유면적"] =  "{}".format(vn[5]) 
-                                    self.for_json_sta["공부_전유면적"] = "{}".format(vn[5])  
-                                    #print("공부_전유면적::", vn[5])
+                            # if paper_L < midpoint(vn)[0] < estim_L:       
+                            #     if re.search("^(\d{1,3}\,)*\d{1,3}.?\d+[-]?$", vn[5]):
+                            #         self.building_attr["공부_전유면적"] =  "{}".format(vn[5]) 
+                            #         self.for_json_sta["공부_전유면적"] = "{}".format(vn[5])  
+                            #         #print("공부_전유면적::", vn[5])
 
-                            if estim_L < midpoint(vn)[0] < price_L:       
-                                if re.search("^(\d{1,3}\,)*\d{1,3}.?\d+[-]?$", vn[5]):
-                                    self.building_attr["사정_전유면적"] =  "{}".format(vn[5])  
-                                    self.for_json_sta["사정_전유면적"] = "{}".format(vn[5])  
+                            # if estim_L < midpoint(vn)[0] < price_L:       
+                            #     if re.search("^(\d{1,3}\,)*\d{1,3}.?\d+[-]?$", vn[5]):
+                            #         self.building_attr["사정_전유면적"] =  "{}".format(vn[5])  
+                            #         self.for_json_sta["사정_전유면적"] = "{}".format(vn[5])  
 
-                                    if re.search("^(\d{1,3}\,)*\d{1,3}.?\d+[-]?$", v_5[5]) and estim_L < midpoint(v_5)[0] < price_L:
+                            #         if re.search("^(\d{1,3}\,)*\d{1,3}.?\d+[-]?$", v_5[5]) and estim_L < midpoint(v_5)[0] < price_L:
     
-                                        if no2_price_level[0] + 50 < v_5[0][1]:
-                                            self.building_attr["대지권면적_사정"] = "{}".format(v_5[5]) ## 사정_전유면적 아래에 존재하는 수
-                                            self.for_json_sta["대지권면적_사정"] = "{}".format(v_5[5])
-                                            #print("대지권면적_사정::", v_5[5])
+                            #             if no2_price_level[0] + 50 < v_5[0][1]:
+                            #                 self.building_attr["대지권면적_사정"] = "{}".format(v_5[5]) ## 사정_전유면적 아래에 존재하는 수
+                            #                 self.for_json_sta["대지권면적_사정"] = "{}".format(v_5[5])
+                            #                 #print("대지권면적_사정::", v_5[5])
 
                             if landclass_R < midpoint(vn)[0] < buildstr_R:       
                                 if re.search("호$", vn[5]):
@@ -1216,8 +1207,8 @@ class ComBld():
             #print("\n", "딥러닝 학습 데이터로 사용 항목", self.for_json_sta, target_js + os.path.splitext(self.image_file)[0], "\n")
 
             
-            with open(target_js + os.path.splitext(self.image_file)[0]+".json", 'w', encoding="UTF-8") as st: #"
-                st.write(str(self.for_json_sta))
+            # with open(target_js + os.path.splitext(self.image_file)[0]+".json", 'w', encoding="UTF-8") as st: #"
+            #     st.write(str(self.for_json_sta))
 
 
 
@@ -1227,7 +1218,7 @@ class ComBld():
             if len(self.B_list)==0:
                 print("건물속성이 모아지지 않았습니다")
                 berr_note = "파일명: {}__ 건물속성이 모아지지 않았습니다::".format(self.idir)
-                with open(r"D:/results/var_2/spec_building_attr_errors.txt", 'a') as f:
+                with open(r"/media/y/850EVO/results/spec_building_attr_errors.txt", 'a') as f:
                     f.write("\n")
                     f.write(berr_note)
 
@@ -1252,10 +1243,22 @@ class ComBld():
         #            new_spec_A_errors.append(nsg)
 
         #    for sne in new_spec_A_errors:
-        #        with open(r"D:/results/var_2/spec_A_errors.txt", 'a') as s:
+        #        with open(r"/media/y/850EVO/results/spec_A_errors.txt", 'a') as s:
         #            s.write("\n")
         #            s.write(str(sne))
     
+
+
+
+
+
+
+    
+
+
+
+
+
 
 
 
@@ -1905,7 +1908,7 @@ class ComBld():
 #         no2_landclass_level = []
 #         if len(landclass_level) == 0:
 #             err_note = "파일명: {}__ 지목 레벨이 없습니다::".format(image_full_path)
-#             with open(r"D:/results/var_2/spec_errors_landclass_level.txt", 'a') as f:
+#             with open(r"/media/y/850EVO/results/spec_errors_landclass_level.txt", 'a') as f:
 #                 f.write("\n")
 #                 f.write(err_note)
 #         else:
@@ -1919,7 +1922,7 @@ class ComBld():
 #         no2_price_level = []
 #         if len(price_level) == 0:
 #             err_note = "파일명: {}__ 평가액 레벨이 없습니다::".format(image_full_path)
-#             with open(r"D:/results/var_2/spec_errors_price_level.txt", 'a') as f:
+#             with open(r"/media/y/850EVO/results/spec_errors_price_level.txt", 'a') as f:
 #                 f.write("\n")
 #                 f.write(err_note)
 #         else:
@@ -1934,7 +1937,7 @@ class ComBld():
 #         no2_daejikwon_level = []
 #         if len(daejikwon_level) == 0:
 #             err_note = "파일명: {}__ 대지권 레벨이 없습니다::".format(image_full_path)
-#             with open(r"D:/results/var_2/spec_errors_daejikwon_level.txt", 'a') as f:
+#             with open(r"/media/y/850EVO/results/spec_errors_daejikwon_level.txt", 'a') as f:
 #                 f.write("\n")
 #                 f.write(err_note)  
 #         else:
@@ -1948,7 +1951,7 @@ class ComBld():
 #         no2_soyoukwon_level = []
 #         if len(soyoukwon_level) == 0:
 #             err_note = "파일명: {}__ 소유권 레벨이 없습니다::".format(image_full_path)
-#             with open(r"D:/results/var_2/spec_errors_soyoukwon_level.txt", 'a') as f:
+#             with open(r"/media/y/850EVO/results/spec_errors_soyoukwon_level.txt", 'a') as f:
 #                 f.write("\n")
 #                 f.write(err_note)
 #         else:
@@ -2471,7 +2474,7 @@ class ComBld():
 #         if len(B_list)==0:
 #             print("건물속성이 모아지지 않았습니다")
 #             berr_note = "파일명: {}__ 건물속성이 모아지지 않았습니다::".format(idir)
-#             with open(r"D:/results/var_2/spec_building_attr_errors.txt", 'a') as f:
+#             with open(r"/media/y/850EVO/results/spec_building_attr_errors.txt", 'a') as f:
 #                 f.write("\n")
 #                 f.write(berr_note)
 
@@ -2489,7 +2492,7 @@ class ComBld():
 #     #            new_spec_A_errors.append(nsg)
 
 #     #    for sne in new_spec_A_errors:
-#     #        with open(r"D:/results/var_2/spec_A_errors.txt", 'a') as s:
+#     #        with open(r"/media/y/850EVO/results/spec_A_errors.txt", 'a') as s:
 #     #            s.write("\n")
 #     #            s.write(str(sne))
     

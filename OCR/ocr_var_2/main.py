@@ -16,8 +16,9 @@ import numpy as np
 import pandas as pd
 from coord import *
 
-from MOD_spec_table_A import *
-from spec_table_B import *
+from MOD_spec_table_A import ComBld
+
+#from spec_table_B import *
 from base_0209 import *
 from head_table import *
 from treat_body_advanced import *
@@ -28,6 +29,7 @@ import datetime
 from itertools import count
 
 
+
 start = time.time()
 
 global new_coord_line, new_coord_box, spec_general_data, head_data, body_general, image_file, integral_attr
@@ -36,12 +38,11 @@ global new_coord_line, new_coord_box, spec_general_data, head_data, body_general
 
 if __name__=='__main__':
 
-    #image_dir = r"D:/data/Head_Tail_folder_wrapped/"
+    
+    image_dir = r"/media/y/850EVO/data/test_batch_1/"
+    #image_dir = r"/media/y/850EVO/LABELED_DATA/train/"
 
-    #image_dir = r"D:/data/test_batch_3/"
-    image_dir = r"E:/train_1000/"
-
-    target_img = r"D:/results/var_2/"
+    target_img = r"/media/y/850EVO/results/var/"
 
     trg_head = "head/"
     trg_body = "body/"
@@ -50,7 +51,7 @@ if __name__=='__main__':
 
 
 
-    target_js = r"D:/results/var_2/"
+    target_js = r"/media/y/850EVO/results/var/"
 
     new_head_data = [] # head_table에서 리턴되는 딕셔너리 수집
 
@@ -92,7 +93,7 @@ if __name__=='__main__':
                         print("\n", " "*25,'"표종류"', ":", '"감정평가표"', head_title[5], "\n") 
                         head_data = head_table(idir, image_file, image_full_path, new_coord_line, new_coord_box)
 
-                        shutil.copy2(image_full_path, target_img + trg_head + image_file)
+                        #shutil.copy2(image_full_path, target_img + trg_head + image_file)
 
                         if head_data is not None:
                             for eh in head_data:
@@ -113,8 +114,8 @@ if __name__=='__main__':
                                 CB=ComBld(idir, image_file, image_full_path, new_coord_line, new_coord_box, next(number))
                                 #CB.spec_general_data, B_list, L_list, for_json_sta = ComBld.spec_table_A()
                                 B_list, L_list, for_json_sta = CB.spec_table_A()
-
-                                shutil.copy2(image_full_path, target_img + trg_spec_A + image_file)
+                                
+                                #shutil.copy2(image_full_path, target_img + trg_spec_A + image_file)
                             
                                 # if spec_general_data != None:
                                 #     for sgd in spec_general_data:
@@ -147,9 +148,9 @@ if __name__=='__main__':
                                 print("\n", " "*25, '"표종류"', ":", '" B 형 감정평가명세표"', "\n")
                                 
                                 #try:#print(" 이 함수의 결과물 갯수는???", spec_general_data, B_list, L_list = spec_table_B(idir, image_full_path, new_coord_line, new_coord_box))
-                                B_list, L_list = spec_table_B(idir, image_full_path, new_coord_line, new_coord_box, next(number))
+                                # B_list, L_list = spec_table_B(idir, image_full_path, new_coord_line, new_coord_box, next(number))
 
-                                shutil.copy2(image_full_path, target_img + trg_spec_B +image_file)
+                                # shutil.copy2(image_full_path, target_img + trg_spec_B +image_file)
 
                                 # if spec_general_data != None:
                                 #     #print("BB main에서 일반목록 확인", spec_general_data)
@@ -180,7 +181,7 @@ if __name__=='__main__':
 
 
                         if body_general_data != None:
-                            shutil.copy2(image_full_path, target_img + trg_body +image_file)
+                            #shutil.copy2(image_full_path, target_img + trg_body +image_file)
                             for bg in body_general_data:
                                 if bg not in body_List:
                                     body_List.append(bg)
@@ -195,21 +196,21 @@ if __name__=='__main__':
     df_head = pd.DataFrame(new_head_data, columns = ['페이지 ID', '평가목적', '기준시점'])
     print("\t", df_head)
     
-    df_head.to_excel(r"D:/results/var_2/head.xlsx")  
+    df_head.to_excel(r"/media/y/850EVO/results/head.xlsx")  
 
     
     df_gen = pd.DataFrame(new_spec_general_data, columns = ['페이지 ID', "소재지",  '지번', '건물명_1',  '건물명_2', '이용상황',  '지상 층 수', '구조', '지붕']) #'도', '시', '군구', '동', '면', '리', '도로명'
     print("\t", df_gen)    
-    df_gen.to_excel(r"D:/results/var_2/spec_general.xlsx") 
+    df_gen.to_excel(r"/media/y/850EVO/results/spec_general.xlsx") 
 
        
     df_spec_B = pd.DataFrame(new_spec_B, columns = ['페이지 ID', "소재지",  '지번', '도', '시', '군구', '동', '면', '리', '건물명_1',  '호', '층', '감정평가액']) #, '공부_전유면적', '사정_전유면적',  '대지권면적_사정', '이용상황',  '지상 층 수', '구조', '지붕', '건물명_2','도로명',
     print("\t", df_spec_B)
-    df_spec_B.to_excel(r"D:/results/var_2/spec_building.xlsx")       
+    df_spec_B.to_excel(r"/media/y/850EVO/results/spec_building.xlsx")       
 
     df_land = pd.DataFrame(new_spec_L, columns = ["페이지 ID", "일련번호_토지", "지목", "지번", "용도지역", "토지면적_해당필지"])
     print("\t", df_land)
-    df_land.to_excel(r"D:/results/var_2/spec_land.xlsx")
+    df_land.to_excel(r"/media/y/850EVO/results/spec_land.xlsx")
 
     eu_body_List = []
     for bl in body_List:
@@ -219,7 +220,7 @@ if __name__=='__main__':
 
     df_body_gen = pd.DataFrame(eu_body_List, columns = ["페이지 ID", "시", "군구", "동", "지번"]) #["페이지 ID", "소재지",  "도로명주소", "건물명", "용도", "사용승인일", "전유면적", "공용면적", "대지권면적", "계약면적"])
     print("\t", " 이것이 본문에서 수집된 귀한 정보임!!!", df_body_gen)
-    df_body_gen.to_excel(r"D:/results/var_2/body_general.xlsx")
+    df_body_gen.to_excel(r"/media/y/850EVO/results/body_general.xlsx")
 
 
 

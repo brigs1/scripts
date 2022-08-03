@@ -4,6 +4,8 @@ from itertools import filterfalse, tee, islice, chain
 from statistics import mean
 from difflib import SequenceMatcher
 
+from torch import square
+
 def this_and_next(some_iterable):
     this, nexts = tee(some_iterable, 2) # 첫째인수는 이터러블, 두번째는 만들고자하는 복사본 갯수, 한번 사용된 레퍼런스는 더 이상 값을 참조하지 않음
     this = chain(this, nexts)
@@ -16,7 +18,7 @@ def string_num_Sort(e):
 
 def get_mid_distance(coord1, coord2): #coord = [x, y] 중점좌표 기준
     # mid 좌표계만 해당
-    distance = math.dist((coord1[0],coord1[1]), (coord2[0], coord2[1]))
+    distance = ((coord1[0] - coord2[0])**2 + (coord2[1] - coord2[1])**2)**(1/2)
     return distance
 
 def get_mid_angle(coord1, coord2): #coord = [x, y] 중점좌표 기준

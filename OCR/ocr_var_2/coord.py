@@ -1,4 +1,4 @@
-﻿
+
 from SynapOCR import *
 from base_0209 import *
 
@@ -34,10 +34,11 @@ def coord(image_full_path):
     print("라인_소수점 정말로 정리::::", new_coord_line, "\n") 
 
     ###### OCR 모드 1 >> midpoint 좌표계로 변환 #####
-    mid_coord_line = []
-    for ncl in new_coord_line:
-        mid_coord_line.append(midpoint(ncl))
-    #print("중점_라인::::", mid_coord_line, "\n")   
+    # mid_coord_line = []
+    # for ncl in new_coord_line:
+    #     mid_coord_line.append(midpoint(ncl))
+
+ 
 
 
     ##### OCR 모드 2 : box (띄어쓴 글자뭉치 인식) #####

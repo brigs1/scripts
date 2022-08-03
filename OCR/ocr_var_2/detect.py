@@ -49,7 +49,7 @@ from utils.torch_utils import select_device, time_sync
 @torch.no_grad()
 def run(
         #weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
-        weights='/media/y/850EVO/scripts/OCR/ocr_var_2/weights/last.pt'
+        weights='/media/y/850EVO/scripts/OCR/ocr_var_2/weights/last.pt',
         source=ROOT / 'data/images',  # file/dir/URL/glob, 0 for webcam
         data=ROOT / 'data/coco128.yaml',  # dataset.yaml path
         imgsz=(1024, 1024),  # inference size (height, width)

@@ -18,6 +18,10 @@ def head_table(idir, image_file, image_full_path, new_coord_line, new_coord_box)
         
     #######  기본항목 리딩  #######
     for base_key in new_coord_line:
+        if re.search("\w+감정원$|\w법인$|\w법인(주)$|\w사무소$", base_key[5]):
+            head_attr["법인명"] = base_val[5]
+            print("법인명 : {}".format(base_val[5]))
+
         for base_val in new_coord_line:
             
             if re.search("목\s?적$", base_key[5]):                    

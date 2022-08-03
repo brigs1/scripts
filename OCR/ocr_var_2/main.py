@@ -252,7 +252,7 @@ if __name__=='__main__':
     #Bld_info_integral = filter(None, Bld_info_integral) # Nontype object 제거
     df_Bld = pd.DataFrame(master_list, columns = ['평가서 ID', '페이지 ID', '법인명', '평가목적', '기준시점', "소재지",  '도', '시', '군구', '동', '면', '리', '지번', '건물명_1', '건물동', '층', '호', '감정평가액']) #, '공부_전유면적', '사정_전유면적',  '대지권면적_사정', '이용상황',  '지상 층 수', '구조', '지붕', '건물명_2','도로명',
       
-    df_Bld.to_excel(r"/media/y/850EVO/results/spec_building.xlsx")       
+    df_Bld.to_excel(r"/media/y/850EVO/results/spec_building.xlsx")     #  
 
     # # df_land = pd.DataFrame(new_spec_L, columns = ["페이지 ID", "일련번호_토지", "지목", "지번", "용도지역", "토지면적_해당필지"])
     # # print("\t", df_land)
